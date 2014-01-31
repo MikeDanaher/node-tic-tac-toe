@@ -1,16 +1,33 @@
+var defaultOutput = function(toPrint) {
+  console.log(toPrint);
+};
 
-exports.printBoard = function(boardState) {
-  console.log('\n');
-  for(i = 0; i < boardState.length; i += 3){
-    console.log('-------------');
-    console.log('| ' + boardState[i] + ' | ' + boardState[i+1] + ' | ' + boardState[i+2] + ' |');
+var boardToString = function(arr) {
+  var line = [];
+  var vSpacer = ' | ';
+  var hSpacer = ' -------------';
+  var newLine = '\n';
+  line.push(newLine);
+  for(var i = 0; i < arr.length; i += 3){
+    line.push(hSpacer);
+    line.push(vSpacer + arr[i] + vSpacer + arr[i+1] + vSpacer + arr[i+2] + vSpacer);
   };
-  console.log('-------------');
-  console.log('\n');
+  line.push(hSpacer);
+  line.push(newLine);
+
+  return line;
+};
+
+exports.printBoard = function(board) {
+  var boardString = boardToString(board);
+
+  for(var j = 0; j < boardString.length; j++) {
+    defaultOutput(boardString[j]);
+  }
 };
 
 exports.endGameMessage = function(endMessage) {
   console.log(endMessage);
 };
 
-
+exports.printBoard(['x','o',' ','o','x','o',' ','o','x']);
