@@ -2,32 +2,38 @@ var defaultOutput = function(toPrint) {
   console.log(toPrint);
 };
 
-var boardToString = function(arr) {
-  var line = [];
-  var vSpacer = ' | ';
-  var hSpacer = ' -------------';
-  var newLine = '\n';
-  line.push(newLine);
-  for(var i = 0; i < arr.length; i += 3){
-    line.push(hSpacer);
-    line.push(vSpacer + arr[i] + vSpacer + arr[i+1] + vSpacer + arr[i+2] + vSpacer);
-  };
-  line.push(hSpacer);
-  line.push(newLine);
-
-  return line;
-};
-
-exports.printBoard = function(board) {
-  var boardString = boardToString(board);
-
-  for(var j = 0; j < boardString.length; j++) {
-    defaultOutput(boardString[j]);
+exports.insertVerticles = function(rows) {
+  var lines = [];
+  for(var i = 0; i < rows.length; i++) {
+    lines.push(rows[i].join(' | '));
   }
+  return lines;
 };
 
-exports.endGameMessage = function(endMessage) {
-  console.log(endMessage);
+exports.insertHorizontals = function(lines) {
+  var newLine = '\n ';
+  newLine += lines.join(' \n------------\n ');
+  newLine += ' \n';
+  return newLine;
 };
 
-exports.printBoard(['x','o',' ','o','x','o',' ','o','x']);
+exports.printBoard = function(horizontalRows) {
+  var board = exports.insertVerticles(horizontalRows);
+  board = exports.insertHorizontals(board);
+  exports.printString(board);
+};
+
+exports.printString = function(message, outputMethod) {
+  if(typeof(outputMethod) === 'undefined') outputMethod = defaultOutput;
+
+  outputMethod(message);
+};
+
+var horizontalRows = [
+      ['x','o',' '],
+      ['o','x','o'],
+      [' ','o',' ']
+    ];
+
+exports.printBoard(horizontalRows);
+
