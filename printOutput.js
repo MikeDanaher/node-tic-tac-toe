@@ -29,11 +29,3 @@ exports.printString = function(message, outputMethod) {
   outputMethod(message);
 };
 
-var horizontalRows = [
-      ['x','o',' '],
-      ['o','x','o'],
-      [' ','o',' ']
-    ];
-
-exports.printBoard(horizontalRows);
-

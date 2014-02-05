@@ -43,6 +43,20 @@ exports.getDiagonals = function() {
   return diagonals;
 };
 
+exports.getPossibleWins = function() {
+  var possibleWins = [];
+  var win = [];
+  var winOrder = [1,2,3,4,5,6,7,8,9,1,4,7,2,5,8,3,6,9,1,5,9,3,5,7];
+  for (var j = 0; j < winOrder.length; j++) {
+    win.push(Board[winOrder[j]]);
+    if (win.length === 3) {
+      possibleWins.push(win);
+      win = [];
+    }
+  }
+  return possibleWins;
+};
+
 exports.getOpenCells = function() {
   var openCells = [];
   for(var i in Board){
@@ -79,7 +93,7 @@ exports.getState = function() {
 exports.reset = function() {
   var boardSize = 9;
   for (i = 1; i <= boardSize; i++){
-    Board[i] = '';
+    Board[i] = ' ';
   };
 };
 
