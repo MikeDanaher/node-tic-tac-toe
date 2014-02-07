@@ -69,15 +69,8 @@ exports.getOpenCells = function() {
   return openCells;
 };
 
-exports.selectCell = function(cell, symbol) {
-  var message = '';
-  if(Board[cell] !== 'x' && Board[cell] !== 'o'){
-    Board[cell] = symbol;
-    message = 'success';
-  } else {
-    message = 'cell taken, try another';
-  }
-  return message;
+exports.update = function(cell, symbol) {
+  Board[cell] = symbol;
 };
 
 exports.getState = function() {

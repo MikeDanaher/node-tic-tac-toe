@@ -12,13 +12,17 @@ describe('input', function(){
   });
 
   it('gets the value entered by the user', function() {
-    var stub = function(message) {
+    var stubReturn = function(input) {
+      return input;
+    };
+
+   var stub = function(message, callback) {
       if(message) {
-        return 3;
+        callback(3);
       }
     };
 
-    expect(input.promptInput(message, stub)).toEqual(3);
+    expect(input.promptInput(message, stubReturn, stub)).toEqual(3);
   });
 
 });
