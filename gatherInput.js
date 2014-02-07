@@ -1,4 +1,4 @@
-var defaultInterface = function(message) {
+exports.promptInput = function(message, callback){
   var rl = require('readline');
   var rlInterface = rl.createInterface(process.stdin, process.stdout);
   var selectedCell = 0;
@@ -6,16 +6,7 @@ var defaultInterface = function(message) {
   rlInterface.question(message, function(input) {
     selectedCell = input;
     rlInterface.close();
+    callback(selectedCell);
   });
-
-  return selectedCell;
-};
-
-exports.promptInput = function(promptMsg, inputInterface){
-  if(typeof(inputInterface) === 'undefined') inputInterface = defaultInterface;
-
-  var userInput = inputInterface(promptMsg);
-
-  return userInput;
 };
 
