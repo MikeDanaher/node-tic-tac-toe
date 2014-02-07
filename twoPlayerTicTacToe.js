@@ -11,26 +11,25 @@ exports.newGame = function() {
   winner.reset();
   moveCount = 0;
   output.printBoard(board.getHorizontalRows());
-  getMove();
+  getMove('Please enter an available cell: ', validMove);
 };
 
-var getMove = function() {
-  var promptMessage = 'Please enter the number of an available cell: ';
-  input.promptInput(promptMessage, validMove);
+var getMove = function(message, nextStep) {
+  input.promptInput(message, nextStep);
 };
 
 var validMove = function(move) {
   var cells = board.getOpenCells();
   if(cells.indexOf(move) !== -1) {
-    selectCell(move);
+    updateBoard(move);
   }else {
-    getMove();
+    getMove('Cell taken, try another: ', validMove);
   }
 };
 
-var selectCell = function(cell) {
+var updateBoard = function(cell) {
   var currentPlayer = players.getCurrentPlayer();
-  board.selectCell(cell, currentPlayer);
+  board.update(cell, currentPlayer);
   moveCount ++;
   if(moveCount < 9) {
     checkWinner(currentPlayer);
@@ -47,7 +46,7 @@ var checkWinner = function(currentPlayer) {
   }else {
     players.switchPlayers();
     output.printBoard(board.getHorizontalRows());
-    getMove();
+    getMove('Please enter an available cell: ', validMove);
   }
 };
 
@@ -58,5 +57,11 @@ var endGame = function(player) {
   }else {
     output.printString("It's a tie!");
   }
+  input.promptInput('Play again? (y/n): ', playAgain);
 };
 
+var playAgain = function(answer) {
+  if(answer == 'y') {
+    exports.newGame();
+  }
+};
