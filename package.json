@@ -1,16 +1,19 @@
 {
-  "name": "tic-tac-toe",
-  "version": "0.0.1",
-  "dependencies": {
-    "jasmine-node": "1.11.0"
-  },
-  "engines": {
-    "node": ">=0.8"
-  },
-  "scripts": {
-    "test": "jasmine-node --forceexit spec"
-  },
-  "devDependencies": {
-    "readline-testharness": "~0.3.0"
-  }
+    "name": "tic-tac-toe",
+    "version": "0.0.1",
+    "dependencies": {
+        "jasmine-node": "1.11.0"
+    },
+    "devDependencies": {
+        "grunt": "0.4.1",
+        "grunt-contrib-jshint": "0.6.4",
+        "grunt-jasmine-node": "0.1.0",
+        "grunt-jsbeautifier": "0.2.2"
+    },
+    "engines": {
+        "node": ">=0.8"
+    },
+    "scripts": {
+        "test": "jasmine-node --forceexit spec"
+    }
 }
