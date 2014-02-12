@@ -23,11 +23,9 @@ exports.check = function(arraySet) {
         } else if (sum === 12) {
             Winner = true;
             break;
+        } else {
+            Winner = false;
         }
     }
     return Winner;
-};
-
-exports.reset = function() {
-    Winner = false;
 };
