@@ -1,40 +1,13 @@
 var board = require('./board');
-var players = require('./players');
-var input = require('./gatherInput');
-var output = require('./printOutput');
+var output = require('./output');
+var humanPlayer = require('./human');
+var input = require('./input');
 var winner = require('./checkForWinner');
-var rules = require('./rules');
-var moveCount = 0;
-var validateMove, checkWinner, updateBoard, endGame, playAgain;
+var moveCount, playAgain, endGame, startGame;
 
-validateMove = function(move) {
-    if (rules.validMove(move, board.getOpenCells())) {
-        updateBoard(move);
-    } else {
-        exports.getMove('Cell taken, try another: ', validateMove);
-    }
-};
-
-checkWinner = function(currentPlayer) {
-    var isWinner = winner.check(board.getPossibleWins());
-
-    if (isWinner) {
-        endGame(currentPlayer);
-    } else {
-        players.switchPlayers();
-        output.printBoard(board.getHorizontalRows());
-        exports.getMove('Please enter an available cell: ', validateMove);
-    }
-};
-
-updateBoard = function(cell) {
-    var currentPlayer = players.getCurrentPlayer();
-    board.update(cell, currentPlayer);
-    moveCount++;
-    if (moveCount < 9) {
-        checkWinner(currentPlayer);
-    } else {
-        endGame();
+playAgain = function(answer) {
+    if (answer === 'y') {
+        exports.newGame();
     }
 };
 
@@ -45,24 +18,35 @@ endGame = function(player) {
     } else {
         output.printString("It's a tie!");
     }
-    input.promptInput('Play again? (y/n): ', playAgain);
+    input.prompt('Play again? (y/n): ', playAgain, process.stdin, process.stdout);
 };
 
-playAgain = function(answer) {
-    if (answer === 'y') {
-        exports.newGame();
-    }
-};
+startGame = function(currentPlayer, opponent) {
+    output.printBoard(board.getHorizontalRows());
 
-exports.getMove = function(message, nextStep) {
-    input.promptInput(message, nextStep);
+    var openCells = board.getOpenCells();
+
+    var moveCallback = function(move) {
+        board.update(move, currentPlayer.symbol);
+        moveCount++;
+        var isWinner = winner.check(board.getPossibleWins());
+
+        if (isWinner) {
+            endGame(currentPlayer.symbol);
+        } else if (moveCount === 9) {
+            endGame();
+        } else {
+            startGame(opponent, currentPlayer);
+        }
+    };
+
+    currentPlayer.getMove(openCells, moveCallback);
 };
 
 exports.newGame = function() {
     board.reset();
-    players.reset();
-    winner.reset();
+    var currentPlayer = new humanPlayer('x');
+    var opponent = new humanPlayer('o');
     moveCount = 0;
-    output.printBoard(board.getHorizontalRows());
-    exports.getMove('Please enter an available cell: ', validateMove);
+    startGame(currentPlayer, opponent);
 };
