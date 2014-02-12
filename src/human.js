@@ -1,21 +1,27 @@
-var input = require('./gatherInput');
+var input = require('./input');
 var rules = require('./rules');
 
-var getMove = function(emptyCells, callback) {
-    var message = 'Please enter a valid cell: ';
+function Human(symbol) {
+    this.symbol = symbol;
+    this.message = 'Player ' + this.symbol + ', please enter a valid cell: ';
+}
+
+Human.prototype.getMove = function(emptyCells, callback, message) {
+    if (!message) {
+        message = this.message;
+    }
 
     var checkIfMoveValid = function(move) {
         if (rules.validMove(move, emptyCells)) {
-            console.log('valid');
             callback(move);
             return;
         } else {
-            console.log('invalid');
-            getMove(emptyCells, callback);
+            var invalidMsg = 'Invalid, try again: ';
+            Human.prototype.getMove(emptyCells, callback, invalidMsg);
         }
     };
 
-    input.promptInput(message, checkIfMoveValid);
+    input.prompt(message, checkIfMoveValid, process.stdin, process.stdout);
 };
 
-exports.getMove = getMove;
+module.exports = Human;
