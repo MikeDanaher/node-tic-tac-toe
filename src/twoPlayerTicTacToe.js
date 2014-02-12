@@ -1,9 +1,9 @@
 var board = require('./board');
 var output = require('./output');
-var humanPlayer = require('./human');
+var HumanPlayer = require('./human');
 var input = require('./input');
 var winner = require('./checkForWinner');
-var moveCount, playAgain, endGame, startGame;
+var moveCount, playAgain, endGame, playTurn;
 
 playAgain = function(answer) {
     if (answer === 'y') {
@@ -11,7 +11,7 @@ playAgain = function(answer) {
     }
 };
 
-endGame = function(player) {
+exports.endGame = function(player) {
     output.printBoard(board.getHorizontalRows());
     if (player) {
         output.printString('Player ' + player + ' Wins!');
@@ -21,7 +21,7 @@ endGame = function(player) {
     input.prompt('Play again? (y/n): ', playAgain, process.stdin, process.stdout);
 };
 
-startGame = function(currentPlayer, opponent) {
+exports.playTurn = function(currentPlayer, opponent) {
     output.printBoard(board.getHorizontalRows());
 
     var openCells = board.getOpenCells();
@@ -32,11 +32,11 @@ startGame = function(currentPlayer, opponent) {
         var isWinner = winner.check(board.getPossibleWins());
 
         if (isWinner) {
-            endGame(currentPlayer.symbol);
+            exports.endGame(currentPlayer.symbol);
         } else if (moveCount === 9) {
-            endGame();
+            exports.endGame();
         } else {
-            startGame(opponent, currentPlayer);
+            exports.playTurn(opponent, currentPlayer);
         }
     };
 
@@ -45,8 +45,8 @@ startGame = function(currentPlayer, opponent) {
 
 exports.newGame = function() {
     board.reset();
-    var currentPlayer = new humanPlayer('x');
-    var opponent = new humanPlayer('o');
+    var currentPlayer = new HumanPlayer('x');
+    var opponent = new HumanPlayer('o');
     moveCount = 0;
-    startGame(currentPlayer, opponent);
+    exports.playTurn(currentPlayer, opponent);
 };

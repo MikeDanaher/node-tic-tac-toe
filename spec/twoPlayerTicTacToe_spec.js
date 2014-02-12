@@ -1,6 +1,7 @@
 var game = require('../src/twoPlayerTicTacToe');
 var board = require('../src/board');
 var output = require('../src/output');
+var HumanPlayer = require('../src/human');
 
 describe('game', function() {
 
@@ -8,7 +9,7 @@ describe('game', function() {
 
         beforeEach(function() {
             spyOn(board, 'reset');
-            spyOn(output, 'printBoard');
+            spyOn(game, 'playTurn');
             game.newGame();
         });
 
@@ -16,41 +17,41 @@ describe('game', function() {
             expect(board.reset).toHaveBeenCalled();
         });
 
-        it('prints out a blank board', function() {
-            expect(output.printBoard).toHaveBeenCalledWith([
-                [' ', ' ', ' '],
-                [' ', ' ', ' '],
-                [' ', ' ', ' ']
-            ]);
+        it('calls the start game function with the new players', function() {
+            var currentPlayer = new HumanPlayer('x'),
+                opponent = new HumanPlayer('o');
+
+            expect(game.playTurn).toHaveBeenCalledWith(currentPlayer, opponent);
         });
     });
 
-    describe('start game', function() {
+    describe('play game', function() {
 
-        beforeEach(function() {
-            var mockPlayer1 = {
-                symbol: 'x',
-                getMove: function(move) {
-                    return move;
-                }
-            };
+        it('plays the game until x wins', function() {
+            var mockPlayer1 = new HumanPlayer('x'),
+                player1Moves = [1, 3, 5, 7];
 
-            var mockPlayer2 = {
-                symbol: 'o',
-                getMove: function(move) {
-                    return move;
-                }
-            };
+            var mockPlayer2 = new HumanPlayer('o'),
+                player2Moves = [2, 4, 6, 8];
 
-            game.start(mockPlayer1, mockPlayer2);
-        });
+            spyOn(mockPlayer1, 'getMove').andCallFake(function(openCells, moveCallback) {
+                moveCallback(player1Moves.shift());
+            });
 
-        xit('chooses the correct cell', function() {
+            spyOn(mockPlayer2, 'getMove').andCallFake(function(openCells, moveCallback) {
+                moveCallback(player2Moves.shift());
+            });
+
+            spyOn(game, 'endGame');
+
+            game.playTurn(mockPlayer1, mockPlayer2);
+
             expect(board.getHorizontalRows()).toEqual([
-                [' ', ' ', ' '],
-                [' ', 'x', ' '],
-                [' ', ' ', ' ']
+                ['x', 'o', 'x'],
+                ['o', 'x', 'o'],
+                ['x', ' ', ' ']
             ]);
+            expect(game.endGame).toHaveBeenCalledWith('x');
         });
     });
 });
