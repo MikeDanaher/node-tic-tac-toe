@@ -1,61 +1,35 @@
-var Board = {};
+var board = {
+    size: 9,
+    winOrder: [1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 4, 7, 2, 5, 8, 3, 6, 9, 1, 5, 9, 3, 5, 7]
+};
 
-exports.getHorizontalRows = function() {
+board.reset = function() {
+    for (var i = 1; i <= board.size; i++) {
+        board[i] = ' ';
+    }
+};
+
+board.getHorizontalRows = function() {
     var horizontalRows = [];
     var row = [];
 
-    for (var i in Board) {
-        if (Board.hasOwnProperty(i)) {
-            row.push(Board[i]);
-            if (row.length === 3) {
-                horizontalRows.push(row);
-                row = [];
-            }
+    for (var i = 1; i <= board.size; i++) {
+        row.push(board[i]);
+        if (row.length === 3) {
+            horizontalRows.push(row);
+            row = [];
         }
     }
 
     return horizontalRows;
 };
 
-exports.getVerticalCols = function() {
-    var verticalCols = [];
-    var col = [];
-    var colOrder = [1, 4, 7, 2, 5, 8, 3, 6, 9];
-
-    for (var i = 0; i < colOrder.length; i++) {
-        col.push(Board[colOrder[i]]);
-        if (col.length === 3) {
-            verticalCols.push(col);
-            col = [];
-        }
-    }
-
-    return verticalCols;
-};
-
-exports.getDiagonals = function() {
-    var diagonals = [];
-    var dia = [];
-    var diaOrder = [1, 5, 9, 3, 5, 7];
-
-    for (var i = 0; i < diaOrder.length; i++) {
-        dia.push(Board[diaOrder[i]]);
-        if (dia.length === 3) {
-            diagonals.push(dia);
-            dia = [];
-        }
-    }
-
-    return diagonals;
-};
-
-exports.getPossibleWins = function() {
+board.getPossibleWins = function() {
     var possibleWins = [];
     var win = [];
-    var winOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 4, 7, 2, 5, 8, 3, 6, 9, 1, 5, 9, 3, 5, 7];
 
-    for (var j = 0; j < winOrder.length; j++) {
-        win.push(Board[winOrder[j]]);
+    for (var j = 0; j < board.winOrder.length; j++) {
+        win.push(board[board.winOrder[j]]);
         if (win.length === 3) {
             possibleWins.push(win);
             win = [];
@@ -65,12 +39,12 @@ exports.getPossibleWins = function() {
     return possibleWins;
 };
 
-exports.getOpenCells = function() {
+board.getOpenCells = function() {
     var openCells = [];
 
-    for (var i in Board) {
-        if (Board.hasOwnProperty(i)) {
-            if (Board[i] !== 'x' && Board[i] !== 'o') {
+    for (var i in board) {
+        if (board.hasOwnProperty(i)) {
+            if (board[i] !== 'x' && board[i] !== 'o') {
                 openCells.push(i);
             }
         }
@@ -79,25 +53,8 @@ exports.getOpenCells = function() {
     return openCells;
 };
 
-exports.update = function(cell, symbol) {
-    Board[cell] = symbol;
+board.update = function(cell, symbol) {
+    board[cell] = symbol;
 };
 
-exports.getState = function() {
-    var boardState = [];
-
-    for (var i in Board) {
-        if (Board.hasOwnProperty(i)) {
-            boardState.push(Board[i]);
-        }
-    }
-
-    return boardState;
-};
-
-exports.reset = function() {
-    var boardSize = 9;
-    for (var i = 1; i <= boardSize; i++) {
-        Board[i] = ' ';
-    }
-};
+module.exports = board;

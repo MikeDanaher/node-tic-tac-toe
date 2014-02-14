@@ -26,44 +26,6 @@ describe('board', function() {
         ]);
     });
 
-    it('gets empty vertical columns', function() {
-        expect(board.getVerticalCols()).toEqual([
-            [' ', ' ', ' '],
-            [' ', ' ', ' '],
-            [' ', ' ', ' ']
-        ]);
-    });
-
-    it('gets filled vertical columns', function() {
-        board.update(2, 'x');
-        board.update(4, 'o');
-        board.update(9, 'x');
-
-        expect(board.getVerticalCols()).toEqual([
-            [' ', 'o', ' '],
-            ['x', ' ', ' '],
-            [' ', ' ', 'x']
-        ]);
-    });
-
-    it('gets empty diagonals', function() {
-        expect(board.getDiagonals()).toEqual([
-            [' ', ' ', ' '],
-            [' ', ' ', ' ']
-        ]);
-    });
-
-    it('gets filled diagonals', function() {
-        board.update(3, 'x');
-        board.update(5, 'o');
-        board.update(7, 'x');
-
-        expect(board.getDiagonals()).toEqual([
-            [' ', 'o', ' '],
-            ['x', 'o', 'x']
-        ]);
-    });
-
     it('gets empty possible wins', function() {
         expect(board.getPossibleWins()).toEqual([
             [' ', ' ', ' '],
@@ -94,18 +56,6 @@ describe('board', function() {
         ]);
     });
 
-    it('gets the board with empty current state', function() {
-        expect(board.getState()).toMatch(' ');
-    });
-
-    it('gets the board with filled current state', function() {
-        board.update(4, 'o');
-        board.update(2, 'x');
-
-        expect(board.getState()).toContain('x');
-        expect(board.getState()).toContain('o');
-    });
-
     it('gets available cells', function() {
         expect(board.getOpenCells()).toMatch(/[1-9]/);
     });
@@ -121,13 +71,13 @@ describe('board', function() {
     });
 
     it('does not allow the caller to modify the board state', function() {
-        var state = board.getState();
-        expect(state[1]).toBe(' ');
+        var state = board.getHorizontalRows();
+        expect(state[1][0]).toBe(' ');
 
-        state[1] = 'x';
+        state[1][0] = 'x';
 
-        var currentState = board.getState();
-        expect(currentState[1]).toBe(' ');
+        var currentState = board.getHorizontalRows();
+        expect(currentState[1][0]).toBe(' ');
     });
 
 });
