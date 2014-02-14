@@ -1,6 +1,4 @@
-var board = require('../src/board');
 var output = require('../src/output');
-
 
 describe('output', function() {
 
@@ -8,31 +6,11 @@ describe('output', function() {
         spyOn(output, 'printString');
         output.printString('This is a message');
 
-        expect(output.printString).toHaveBeenCalled();
+        expect(output.printString).toHaveBeenCalledWith('This is a message');
     });
 
-    it('inserts verticle lines between each value', function() {
-        var horizontalRows = [
-            ['x', 'o', ' '],
-            ['o', 'x', 'o'],
-            [' ', 'o', ' ']
-        ];
-
-        expect(output.insertVerticles(horizontalRows)).toEqual(['x | o |  ', 'o | x | o', '  | o |  ']);
-    });
-
-    it('inserts new lines and horizontal lines between each and returns a string', function() {
-        var lines = [
-            'x | o |  ',
-            'o | x | o',
-            '  | o |  '
-        ];
-
-        expect(output.insertHorizontals(lines)).toEqual('\n x | o |   \n------------\n o | x | o \n------------\n   | o |   \n');
-    });
-
-    it('prints the board from the horizontal rows', function() {
-        spyOn(output, 'printBoard');
+    it('prints the board using the horizontal rows', function() {
+        spyOn(output, 'printString');
         var horizontalRows = [
             ['x', 'x', ' '],
             ['o', 'o', 'x'],
@@ -40,7 +18,7 @@ describe('output', function() {
         ];
         output.printBoard(horizontalRows);
 
-        expect(output.printBoard).toHaveBeenCalled();
+        expect(output.printString).toHaveBeenCalledWith('\n x | x |   \n------------\n o | o | x \n------------\n   | x | o \n');
     });
 
 });
