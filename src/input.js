@@ -1,31 +1,20 @@
-var readlineInterface = function(message, callback) {
-    var rl = require('readline');
-    var rlInterface = rl.createInterface(process.stdin, process.stdout);
-    var selectedCell = 0;
+var input = {};
 
-    rlInterface.question(message, function(input) {
-        //move = parseInt(move, 10);
-        selectedCell = input;
-        rlInterface.close();
-        callback(selectedCell);
-    });
+var theyPressedEnter = function(chunk) {
+    return chunk.indexOf('\n') !== -1;
 };
 
-var theyPressedEnter = function(input) {
-    return input.indexOf('\n') !== -1;
-};
-
-exports.prompt = function(message, callback, input, output) {
-    output.write(message);
+input.prompt = function(message, callback, input_method, output_method) {
+    output_method.write(message);
 
     var userInput = '';
 
-    input.resume();
-    input.setEncoding('utf8');
+    input_method.resume();
+    input_method.setEncoding('utf8');
 
     var finished = function(value) {
-        input.pause();
-        input.removeListener('data', dataCallback);
+        input_method.pause();
+        input_method.removeListener('data', dataCallback);
         callback(value);
     };
 
@@ -37,14 +26,7 @@ exports.prompt = function(message, callback, input, output) {
         }
     };
 
-    input.on('data', dataCallback);
+    input_method.on('data', dataCallback);
 };
 
-exports.promptForNumber = function(message, callback, input, output) {
-    var convertToNumber = function(input) {
-        var number = parseInt(input, 10);
-        callback(number);
-    };
-
-    exports.prompt(message, convertToNumber, input, output);
-};
+module.exports = input;
