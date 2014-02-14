@@ -5,19 +5,19 @@ var HumanPlayer = require('../src/human');
 
 describe('game', function() {
 
-    describe('new game', function() {
+    describe('reset', function() {
 
         beforeEach(function() {
             spyOn(board, 'reset');
             spyOn(game, 'playTurn');
-            game.newGame();
+            game.reset();
         });
 
         it('clears the board', function() {
             expect(board.reset).toHaveBeenCalled();
         });
 
-        it('calls the start game function with the new players', function() {
+        it('calls the play game function with the new players', function() {
             var currentPlayer = new HumanPlayer('x'),
                 opponent = new HumanPlayer('o');
 
@@ -42,7 +42,7 @@ describe('game', function() {
                 moveCallback(player2Moves.shift());
             });
 
-            spyOn(game, 'endGame');
+            spyOn(game, 'finish');
 
             game.playTurn(mockPlayer1, mockPlayer2);
 
@@ -51,7 +51,15 @@ describe('game', function() {
                 ['o', 'x', 'o'],
                 ['x', ' ', ' ']
             ]);
-            expect(game.endGame).toHaveBeenCalledWith('x');
+            expect(game.finish).toHaveBeenCalledWith('x');
         });
+
+        it('plays the game again', function() {
+            spyOn(game, 'reset');
+            game.playAgain('y');
+
+            expect(game.reset).toHaveBeenCalled();
+        });
+
     });
 });

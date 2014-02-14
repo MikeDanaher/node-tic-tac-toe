@@ -1,4 +1,7 @@
-exports.validMove = function(move, cells) {
-    //    move = parseInt(move, 10);
+var rules = {};
+
+rules.validMove = function(move, cells) {
     return cells.indexOf(move) !== -1;
 };
+
+module.exports = rules;
