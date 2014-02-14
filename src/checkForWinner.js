@@ -15,5 +15,4 @@ Winner.check = function(winsArray) {
 
 };
 
-
 module.exports = Winner;

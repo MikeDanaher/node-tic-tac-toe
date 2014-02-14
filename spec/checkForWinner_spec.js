@@ -26,11 +26,10 @@ describe('winner', function() {
         var possibleWins = [
             ['o', 'x', 'o'],
             [' ', 'o', 'x'],
-            ['x', ' ', 'x']
+            [' ', ' ', ' ']
         ];
 
         expect(winner.check(possibleWins)).toBeFalsy();
     });
-
 
 });
