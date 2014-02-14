@@ -1,31 +1,19 @@
-var Winner = false;
+var Winner = {};
 
-exports.addArray = function(arr) {
-    var total = 0;
-    for (var i = 0; i < arr.length; i++) {
-        if (arr[i] === 'x') {
-            total += 1;
-        } else if (arr[i] === 'o') {
-            total += 4;
-        } else {
-            total = total;
+Winner.check = function(winsArray) {
+    var isWinner = false;
+
+    for (var i = 0; i < winsArray.length; i++) {
+        var test = winsArray[i].join('');
+        if (test === 'xxx' || test === 'ooo') {
+            isWinner = true;
+            break;
         }
     }
-    return total;
+
+    return isWinner;
+
 };
 
-exports.check = function(arraySet) {
-    for (var j = 0; j < arraySet.length; j++) {
-        var sum = exports.addArray(arraySet[j]);
-        if (sum === 3) {
-            Winner = true;
-            break;
-        } else if (sum === 12) {
-            Winner = true;
-            break;
-        } else {
-            Winner = false;
-        }
-    }
-    return Winner;
-};
+
+module.exports = Winner;
