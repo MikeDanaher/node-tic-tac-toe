@@ -1,7 +1,3 @@
-var defaultOutput = function(toPrint) {
-    console.log(toPrint);
-};
-
 var insertVerticles = function(rows) {
     var lines = [];
     for (var i = 0; i < rows.length; i++) {
@@ -26,9 +22,7 @@ output.printBoard = function(horizontalRows) {
 };
 
 output.printString = function(message, outputMethod) {
-    if (!outputMethod) {
-        outputMethod = defaultOutput;
-    }
+    outputMethod = outputMethod || console.log;
 
     outputMethod(message);
 };

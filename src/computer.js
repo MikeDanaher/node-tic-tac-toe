@@ -3,7 +3,7 @@ function Computer(symbol) {
 }
 
 Computer.prototype.getMove = function(openCells, callback) {
-    var move = openCells[1];
+    var move = openCells[0];
 
     callback(move);
 };

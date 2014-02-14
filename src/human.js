@@ -7,9 +7,7 @@ function Human(symbol) {
 }
 
 Human.prototype.getMove = function(emptyCells, callback, message) {
-    if (!message) {
-        message = this.message;
-    }
+    message = message || this.message;
 
     var checkIfMoveValid = function(move) {
         if (rules.validMove(move, emptyCells)) {
@@ -21,7 +19,7 @@ Human.prototype.getMove = function(emptyCells, callback, message) {
         }
     };
 
-    input.prompt(message, checkIfMoveValid, process.stdin, process.stdout);
+    input.prompt(message, checkIfMoveValid);
 };
 
 module.exports = Human;

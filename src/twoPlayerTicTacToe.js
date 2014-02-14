@@ -45,7 +45,7 @@ game.finish = function(player) {
     } else {
         output.printString("It's a tie!");
     }
-    input.prompt('Play again? (y/n): ', game.playAgain, process.stdin, process.stdout);
+    input.prompt('Play again? (y/n): ', game.playAgain);
 };
 
 game.playAgain = function(answer) {

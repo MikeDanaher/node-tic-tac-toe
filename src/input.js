@@ -5,6 +5,9 @@ var theyPressedEnter = function(chunk) {
 };
 
 input.prompt = function(message, callback, input_method, output_method) {
+    input_method = input_method || process.stdin;
+    output_method = output_method || process.stdout;
+
     output_method.write(message);
 
     var userInput = '';
