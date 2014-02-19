@@ -32,4 +32,12 @@ input.prompt = function(message, callback, input_method, output_method) {
     input_method.on('data', dataCallback);
 };
 
+input.promptForNumber = function(message, callback, input_method, output_method) {
+    var convertToNumber = function(string) {
+        callback(parseInt(string, 10));
+    };
+
+    input.prompt(message, convertToNumber, input_method, output_method);
+};
+
 module.exports = input;

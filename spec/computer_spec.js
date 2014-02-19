@@ -1,5 +1,9 @@
 var Computer = require('../src/computer');
+var Human = require('../src/human');
+var gameBoard = require('../src/board');
+
 var computerPlayer = new Computer('o');
+var humanPlayer = new Human('x');
 
 describe('computer', function() {
 
@@ -7,15 +11,16 @@ describe('computer', function() {
         expect(computerPlayer.symbol).toEqual('o');
     });
 
-    it('gets the next move from the computer from the valid cells', function(done) {
-        var openCells = [2, 3, 4, 7, 9];
+    xit('gets the next best move from the computer', function(done) {
+        var Board = new gameBoard();
+        Board.setState('o', 'x', 'o', ' ', 'x', 'x', ' ', 'o', 'x');
 
         var expectation = function(move) {
-            expect(openCells).toContain(move);
+            expect(move).toEqual(4);
             done();
         };
 
-        computerPlayer.getMove(openCells, expectation);
+        computerPlayer.getBestMove(Board, expectation);
     });
 
 });

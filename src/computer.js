@@ -1,23 +1,28 @@
-var board = require('./board');
+var minimax = require('./minimax');
 
 function Computer(symbol) {
     this.symbol = symbol;
-    this.minimaxPlayer = true;
 }
 
-Computer.prototype.getMove = function(openCells, callback) {
-    var move = openCells[0];
+Computer.prototype.getMove = function(board, callback) {
+    var move = board[1];
 
     callback(move);
 };
 
-Computer.prototype.getBestMove = function(opencells, player, opponent, callback) {
-    var boardState = board.getHorizontalRows();
-    var depth = 0;
-    var bound = openCells.length + 2;
+Computer.prototype.getBestMove = function(board, callback) {
+    var player = this.symbol;
+    var opponent = '';
 
-    var bestMove = minimax(boardState, depth, -bound, bound, player, opponent);
+    if (player === 'x') {
+        opponent = 'o';
+    } else {
+        opponent = 'x';
+    }
+
+    var bestMove = minimax.run(board, player, opponent);
 
     callback(bestMove);
-}
+};
+
 module.exports = Computer;

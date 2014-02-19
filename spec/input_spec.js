@@ -22,4 +22,17 @@ describe('input', function() {
 
         process.stdin.emit('data', line);
     });
+
+    it('returns a number from user prompt', function(done) {
+        var line = '4\n';
+        var callback = function(value) {
+            expect(value).toBe(4);
+            done();
+        };
+
+        input.promptForNumber('My prompt text here:', callback, process.stdin, process.stdout);
+
+        process.stdin.emit('data', line);
+    });
+
 });

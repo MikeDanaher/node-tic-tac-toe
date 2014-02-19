@@ -19,7 +19,7 @@ Human.prototype.getMove = function(emptyCells, callback, message) {
         }
     };
 
-    input.prompt(message, checkIfMoveValid);
+    input.promptForNumber(message, checkIfMoveValid);
 };
 
 module.exports = Human;

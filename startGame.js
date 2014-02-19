@@ -1,3 +1,3 @@
-var game = require('./twoPlayerTicTacToe');
+var game = require('./src/twoPlayerTicTacToe');
 
 game.reset();

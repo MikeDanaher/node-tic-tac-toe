@@ -9,7 +9,7 @@ describe('human player', function() {
 
     it('chooses a valid move from the empty cells', function(done) {
         var player2 = new HumanPlayer('x');
-        var emptyCells = ['1', '3', '5', '7'];
+        var emptyCells = [1, 3, 5, 7];
         var choice = '5\n';
 
         var expectation = function(move) {
