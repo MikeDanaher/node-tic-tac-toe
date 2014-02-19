@@ -58,6 +58,7 @@ describe('board', function() {
 
     it('gets available cells', function() {
         expect(board.getOpenCells()).toMatch(/[1-9]/);
+        expect(board.getOpenCells().length).toEqual(9);
     });
 
     it('selects an open cell', function() {
@@ -68,6 +69,17 @@ describe('board', function() {
 
         expect(boardState[0][0]).toEqual('x');
         expect(boardState[2][1]).toEqual('o');
+    });
+
+    it('removes a cell that was already taken', function() {
+        board.update(3, 'o');
+        board.update(7, 'x');
+
+        board.remove(3);
+        var boardState = board.getHorizontalRows();
+
+        expect(boardState[0][2]).toEqual(' ');
+        expect(boardState[2][0]).toEqual('x');
     });
 
     it('does not allow the caller to modify the board state', function() {

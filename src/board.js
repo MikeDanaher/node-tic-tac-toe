@@ -42,11 +42,9 @@ board.getPossibleWins = function() {
 board.getOpenCells = function() {
     var openCells = [];
 
-    for (var i in board) {
-        if (board.hasOwnProperty(i)) {
-            if (board[i] !== 'x' && board[i] !== 'o') {
-                openCells.push(i);
-            }
+    for (var x = 1; x <= board.size; x++) {
+        if (board[x] !== 'x' && board[x] !== 'o') {
+            openCells.push(x);
         }
     }
 
@@ -55,6 +53,10 @@ board.getOpenCells = function() {
 
 board.update = function(cell, symbol) {
     board[cell] = symbol;
+};
+
+board.remove = function(cell) {
+    board[cell] = ' ';
 };
 
 module.exports = board;
