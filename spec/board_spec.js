@@ -1,13 +1,14 @@
-var board = require('../src/board');
+var gameBoard = require('../src/board');
+var Board = new gameBoard();
 
 describe('board', function() {
 
     beforeEach(function() {
-        board.reset();
+        Board.reset();
     });
 
     it('gets empty horizontal rows', function() {
-        expect(board.getHorizontalRows()).toEqual([
+        expect(Board.getHorizontalRows()).toEqual([
             [' ', ' ', ' '],
             [' ', ' ', ' '],
             [' ', ' ', ' ']
@@ -15,11 +16,11 @@ describe('board', function() {
     });
 
     it('gets filled horizontal rows', function() {
-        board.update(1, 'x');
-        board.update(5, 'o');
-        board.update(8, 'x');
+        Board.update(1, 'x');
+        Board.update(5, 'o');
+        Board.update(8, 'x');
 
-        expect(board.getHorizontalRows()).toEqual([
+        expect(Board.getHorizontalRows()).toEqual([
             ['x', ' ', ' '],
             [' ', 'o', ' '],
             [' ', 'x', ' ']
@@ -27,7 +28,7 @@ describe('board', function() {
     });
 
     it('gets empty possible wins', function() {
-        expect(board.getPossibleWins()).toEqual([
+        expect(Board.getPossibleWins()).toEqual([
             [' ', ' ', ' '],
             [' ', ' ', ' '],
             [' ', ' ', ' '],
@@ -40,11 +41,11 @@ describe('board', function() {
     });
 
     it('gets filled possible wins', function() {
-        board.update(3, 'x');
-        board.update(5, 'o');
-        board.update(7, 'x');
+        Board.update(3, 'x');
+        Board.update(5, 'o');
+        Board.update(7, 'x');
 
-        expect(board.getPossibleWins()).toEqual([
+        expect(Board.getPossibleWins()).toEqual([
             [' ', ' ', 'x'],
             [' ', 'o', ' '],
             ['x', ' ', ' '],
@@ -57,38 +58,50 @@ describe('board', function() {
     });
 
     it('gets available cells', function() {
-        expect(board.getOpenCells()).toMatch(/[1-9]/);
-        expect(board.getOpenCells().length).toEqual(9);
+        expect(Board.getOpenCells()).toMatch(/[1-9]/);
+        expect(Board.getOpenCells().length).toEqual(9);
     });
 
     it('selects an open cell', function() {
-        board.update(1, 'x');
-        board.update(8, 'o');
+        Board.update(1, 'x');
+        Board.update(8, 'o');
 
-        var boardState = board.getHorizontalRows();
+        var boardState = Board.getHorizontalRows();
 
         expect(boardState[0][0]).toEqual('x');
         expect(boardState[2][1]).toEqual('o');
     });
 
     it('removes a cell that was already taken', function() {
-        board.update(3, 'o');
-        board.update(7, 'x');
+        Board.update(3, 'o');
+        Board.update(7, 'x');
 
-        board.remove(3);
-        var boardState = board.getHorizontalRows();
+        Board.remove(3);
+        var boardState = Board.getHorizontalRows();
 
         expect(boardState[0][2]).toEqual(' ');
         expect(boardState[2][0]).toEqual('x');
     });
 
+    it('sets the state of the board given an array of symbols', function() {
+        var arrayOfSymbols = ['x', 'o', 'x', ' ', 'o', 'x', ' ', 'o', 'x'];
+
+        Board.setState(arrayOfSymbols);
+
+        expect(Board.getHorizontalRows()).toEqual([
+            ['x', 'o', 'x'],
+            [' ', 'o', 'x'],
+            [' ', 'o', 'x']
+        ]);
+    });
+
     it('does not allow the caller to modify the board state', function() {
-        var state = board.getHorizontalRows();
+        var state = Board.getHorizontalRows();
         expect(state[1][0]).toBe(' ');
 
         state[1][0] = 'x';
 
-        var currentState = board.getHorizontalRows();
+        var currentState = Board.getHorizontalRows();
         expect(currentState[1][0]).toBe(' ');
     });
 
