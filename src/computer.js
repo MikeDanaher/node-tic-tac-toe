@@ -5,12 +5,6 @@ function Computer(symbol) {
 }
 
 Computer.prototype.getMove = function(board, callback) {
-    var move = board[1];
-
-    callback(move);
-};
-
-Computer.prototype.getBestMove = function(board, callback) {
     var player = this.symbol;
     var opponent = '';
 

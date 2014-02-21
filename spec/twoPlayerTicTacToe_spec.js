@@ -2,6 +2,7 @@ var game = require('../src/twoPlayerTicTacToe');
 var gameBoard = require('../src/board');
 var output = require('../src/output');
 var HumanPlayer = require('../src/human');
+var ComputerPlayer = require('../src/computer');
 
 describe('play game', function() {
 
@@ -9,7 +10,7 @@ describe('play game', function() {
         spyOn(game, 'playTurn');
 
         var currentPlayer = new HumanPlayer('x'),
-            opponent = new HumanPlayer('o');
+            opponent = new ComputerPlayer('o');
 
         game.reset();
 

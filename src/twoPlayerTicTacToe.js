@@ -1,32 +1,31 @@
-var gameBoard = require('./board');
+var Board = require('./board');
 var output = require('./output');
 var HumanPlayer = require('./human');
 var input = require('./input');
 var winner = require('./checkForWinner');
+var ComputerPlayer = require('./computer');
 
-var Board = new gameBoard();
+var board = new Board();
 
 var game = {
     moveCount: 0
 };
 
 game.reset = function() {
-    Board.reset();
+    board.reset();
     var currentPlayer = new HumanPlayer('x');
-    var opponent = new HumanPlayer('o');
+    var opponent = new ComputerPlayer('o');
     game.moveCount = 0;
     game.playTurn(currentPlayer, opponent);
 };
 
 game.playTurn = function(currentPlayer, opponent) {
-    output.printBoard(Board.getHorizontalRows());
-
-    var openCells = Board.getOpenCells();
+    output.printBoard(board.getHorizontalRows());
 
     var moveCallback = function(move) {
-        Board.update(move, currentPlayer.symbol);
+        board.update(move, currentPlayer.symbol);
         game.moveCount++;
-        var isWinner = winner.check(Board.getPossibleWins());
+        var isWinner = winner.check(board.getPossibleWins());
 
         if (isWinner) {
             game.finish(currentPlayer.symbol);
@@ -37,11 +36,11 @@ game.playTurn = function(currentPlayer, opponent) {
         }
     };
 
-    currentPlayer.getMove(openCells, moveCallback);
+    currentPlayer.getMove(board, moveCallback);
 };
 
 game.finish = function(player) {
-    output.printBoard(Board.getHorizontalRows());
+    output.printBoard(board.getHorizontalRows());
     if (player) {
         output.printString('Player ' + player + ' Wins!');
     } else {
