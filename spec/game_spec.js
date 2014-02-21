@@ -1,5 +1,4 @@
-var game = require('../src/twoPlayerTicTacToe');
-var newGame = require('../src/playTicTacToe');
+var game = require('../src/game');
 var gameBoard = require('../src/board');
 var output = require('../src/output');
 var HumanPlayer = require('../src/human');
@@ -40,10 +39,4 @@ describe('play game', function() {
         expect(game.finish).toHaveBeenCalledWith('x');
     });
 
-    it('plays the game again', function() {
-        spyOn(newGame, 'start');
-        game.playAgain('y');
-
-        expect(newGame.start).toHaveBeenCalled();
-    });
 });

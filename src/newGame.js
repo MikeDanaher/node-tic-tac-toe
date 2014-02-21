@@ -1,4 +1,4 @@
-var game = require('./twoPlayerTicTacToe');
+var game = require('./game');
 var input = require('./input');
 var rules = require('./rules');
 

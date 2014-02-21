@@ -1,5 +1,4 @@
-var game = require('../src/playTicTacToe');
-var tictactoe = require('../src/twoPlayerTicTacToe');
+var newGame = require('../src/newGame');
 
 describe('start a new game', function() {
 
