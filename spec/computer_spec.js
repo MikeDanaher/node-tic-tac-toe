@@ -1,26 +1,24 @@
 var Computer = require('../src/computer');
-var Human = require('../src/human');
-var gameBoard = require('../src/board');
-
-var computerPlayer = new Computer('o');
-var humanPlayer = new Human('x');
+var Board = require('../src/board');
 
 describe('computer', function() {
 
+    var computer = new Computer('o');
+
     it('creates a new computer player', function() {
-        expect(computerPlayer.symbol).toEqual('o');
+        expect(computer.symbol).toEqual('o');
     });
 
-    xit('gets the next best move from the computer', function(done) {
-        var Board = new gameBoard();
-        Board.setState('o', 'x', 'o', ' ', 'x', 'x', ' ', 'o', 'x');
+    it('calls minimax on an empty board', function(done) {
+        var board = new Board();
+        board.reset();
 
-        var expectation = function(move) {
-            expect(move).toEqual(4);
+        var expectation = function(bestMove) {
+            expect(bestMove).toEqual(1);
             done();
         };
 
-        computerPlayer.getBestMove(Board, expectation);
+        computer.getMove(board, expectation);
     });
 
 });
