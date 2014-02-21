@@ -6,16 +6,16 @@ function Human(symbol) {
     this.message = 'Player ' + this.symbol + ', please enter a valid cell: ';
 }
 
-Human.prototype.getMove = function(emptyCells, callback, message) {
+Human.prototype.getMove = function(board, callback, message) {
     message = message || this.message;
 
     var checkIfMoveValid = function(move) {
-        if (rules.validMove(move, emptyCells)) {
+        if (rules.validMove(move, board.getOpenCells())) {
             callback(move);
             return;
         } else {
             var invalidMsg = 'Invalid, try again: ';
-            Human.prototype.getMove(emptyCells, callback, invalidMsg);
+            Human.prototype.getMove(board, callback, invalidMsg);
         }
     };
 
