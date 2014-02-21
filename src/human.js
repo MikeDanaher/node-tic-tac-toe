@@ -12,7 +12,6 @@ Human.prototype.getMove = function(board, callback, message) {
     var checkIfMoveValid = function(move) {
         if (rules.validMove(move, board.getOpenCells())) {
             callback(move);
-            return;
         } else {
             var invalidMsg = 'Invalid, try again: ';
             Human.prototype.getMove(board, callback, invalidMsg);

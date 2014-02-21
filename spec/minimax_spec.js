@@ -55,5 +55,13 @@ describe('minimax', function() {
         expect(sides).toContain(minimax.run(Board4, callingPlayer, opponent));
     });
 
+    xit('should choose the first corner and then opposite corner when going first', function() {
+        var Board5 = new gameBoard();
+        Board5.setState(['o', ' ', ' ', ' ', 'x', ' ', ' ', ' ', ' ']);
+
+        expect(minimax.run(Board5, callingPlayer, opponent)).toEqual(9);
+    });
+
+
 
 });

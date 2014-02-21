@@ -1,4 +1,5 @@
 var game = require('../src/twoPlayerTicTacToe');
+var newGame = require('../src/playTicTacToe');
 var gameBoard = require('../src/board');
 var output = require('../src/output');
 var HumanPlayer = require('../src/human');
@@ -6,13 +7,12 @@ var ComputerPlayer = require('../src/computer');
 
 describe('play game', function() {
 
-    it('calls the play game function with the new players', function() {
+    it('sets up a new game given the symbol entered by the human player', function() {
         spyOn(game, 'playTurn');
+        game.setup('x');
 
-        var currentPlayer = new HumanPlayer('x'),
-            opponent = new ComputerPlayer('o');
-
-        game.reset();
+        var currentPlayer = new HumanPlayer('x');
+        var opponent = new ComputerPlayer('o');
 
         expect(game.playTurn).toHaveBeenCalledWith(currentPlayer, opponent);
     });
@@ -41,9 +41,9 @@ describe('play game', function() {
     });
 
     it('plays the game again', function() {
-        spyOn(game, 'reset');
+        spyOn(newGame, 'start');
         game.playAgain('y');
 
-        expect(game.reset).toHaveBeenCalled();
+        expect(newGame.start).toHaveBeenCalled();
     });
 });

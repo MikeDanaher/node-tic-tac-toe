@@ -1,9 +1,10 @@
 var Board = require('./board');
-var output = require('./output');
 var HumanPlayer = require('./human');
+var ComputerPlayer = require('./computer');
+var rules = require('./rules');
+var output = require('./output');
 var input = require('./input');
 var winner = require('./checkForWinner');
-var ComputerPlayer = require('./computer');
 
 var board = new Board();
 
@@ -11,18 +12,33 @@ var game = {
     moveCount: 0
 };
 
-game.reset = function() {
+game.setup = function(humanSymbol, newGame) {
     board.reset();
-    var currentPlayer = new HumanPlayer('x');
-    var opponent = new ComputerPlayer('o');
+    game.playAgain = newGame;
     game.moveCount = 0;
+
+    var currentPlayer,
+        opponent;
+
+    var opponentSymbol = rules.getOtherSymbol(humanSymbol);
+    var humanPlayer = new HumanPlayer(humanSymbol);
+    var computerPlayer = new ComputerPlayer(opponentSymbol);
+
+    if (humanSymbol === 'x') {
+        currentPlayer = humanPlayer;
+        opponent = computerPlayer;
+    } else {
+        currentPlayer = computerPlayer;
+        opponent = humanPlayer;
+    }
+
     game.playTurn(currentPlayer, opponent);
 };
 
 game.playTurn = function(currentPlayer, opponent) {
     output.printBoard(board.getHorizontalRows());
 
-    var moveCallback = function(move) {
+    var makeMove = function(move) {
         board.update(move, currentPlayer.symbol);
         game.moveCount++;
         var isWinner = winner.check(board.getPossibleWins());
@@ -36,7 +52,7 @@ game.playTurn = function(currentPlayer, opponent) {
         }
     };
 
-    currentPlayer.getMove(board, moveCallback);
+    currentPlayer.getMove(board, makeMove);
 };
 
 game.finish = function(player) {
@@ -46,13 +62,8 @@ game.finish = function(player) {
     } else {
         output.printString("It's a tie!");
     }
-    input.prompt('Play again? (y/n): ', game.playAgain);
+    game.playAgain('Play again? (y/n): ');
 };
 
-game.playAgain = function(answer) {
-    if (answer === 'y' || answer === 'Y') {
-        game.reset();
-    }
-};
 
 module.exports = game;

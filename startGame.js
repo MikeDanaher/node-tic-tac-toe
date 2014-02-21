@@ -1,3 +1,3 @@
-var game = require('./src/twoPlayerTicTacToe');
+var promptForSymbol = require('./src/playTicTacToe');
 
-game.reset();
+promptForSymbol.start();
