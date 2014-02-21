@@ -1,19 +1,21 @@
 var winner = require('./checkForWinner');
 
 var minimax = {
-    callingPlayer: ''
+    callingPlayer: '',
+    baseScore: 0
 };
 
 minimax.run = function(board, player, opponent) {
     minimax.callingPlayer = player;
+    minimax.baseScore = board.getOpenCells().length + 1;
+    var bound = minimax.baseScore + 1;
     var depth = 0;
-    var bound = board.getOpenCells().length + 2;
     return minimax.loop(board, depth, -bound, bound, player, opponent);
 };
 
 minimax.loop = function(board, depth, lowerBound, upperBound, player, opponent) {
-    if (winner.check(board) || board.getOpenCells().length === 0) {
-        return minimax.score(board, depth, upperBound, player, opponent);
+    if (winner.check(board.getPossibleWins()) || board.getOpenCells().length === 0) {
+        return minimax.score(board, depth, minimax.callingPlayer);
     }
 
     var openCells = board.getOpenCells();
@@ -33,7 +35,7 @@ minimax.loop = function(board, depth, lowerBound, upperBound, player, opponent) 
             upperBound = Math.min(upperBound, score);
         }
 
-        if (upperBound <= lowerBound) {
+        if (upperBound < lowerBound) {
             break;
         }
     }
@@ -50,13 +52,13 @@ minimax.loop = function(board, depth, lowerBound, upperBound, player, opponent) 
 
 };
 
-minimax.score = function(board, depth, upperBound, player, opponent) {
-    var winningPlayer = winner.who(board.getHorizontalRows());
+minimax.score = function(board, depth, callingPlayer) {
+    var winningPlayer = winner.who(board.getPossibleWins());
 
-    if (winningPlayer === player) {
-        return upperBound - depth;
-    } else if (winningPlayer === opponent) {
-        return depth - upperBound;
+    if (winningPlayer === callingPlayer) {
+        return minimax.baseScore - depth;
+    } else if (winningPlayer !== undefined) {
+        return depth - minimax.baseScore;
     } else {
         return 0;
     }
