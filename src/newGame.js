@@ -23,14 +23,13 @@ newGame.start = function(message) {
 
 newGame.playAgain = function(message) {
 
-    var validMessage = function(choice) {
-        if (choice === 'y') {
+    var validNewGame = function(choice) {
+        if (rules.newGamePrompt(choice)) {
             newGame.start();
         }
     };
 
-    input.prompt(message, validMessage);
+    input.prompt(message, validNewGame);
 };
-
 
 module.exports = newGame;
