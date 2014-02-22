@@ -1,3 +1,3 @@
-var promptForSymbol = require('./src/playTicTacToe');
+var newGame = require('./src/newGame');
 
-promptForSymbol.start();
+newGame.start();

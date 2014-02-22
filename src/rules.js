@@ -24,4 +24,10 @@ rules.getOtherSymbol = function(symbol) {
     return oppositeSymbol;
 };
 
+rules.newGamePrompt = function(choice) {
+    var options = ['y', 'Y', 'Yes'];
+
+    return options.indexOf(choice) !== -1;
+};
+
 module.exports = rules;

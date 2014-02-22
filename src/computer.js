@@ -1,4 +1,5 @@
 var minimax = require('./minimax');
+var rules = require('./rules');
 
 function Computer(symbol) {
     this.symbol = symbol;
@@ -6,14 +7,7 @@ function Computer(symbol) {
 
 Computer.prototype.getMove = function(board, callback) {
     var player = this.symbol;
-    var opponent = '';
-
-    if (player === 'x') {
-        opponent = 'o';
-    } else {
-        opponent = 'x';
-    }
-
+    var opponent = rules.getOtherSymbol(player);
     var bestMove = minimax.run(board, player, opponent);
 
     callback(bestMove);

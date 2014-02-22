@@ -1,16 +1,13 @@
 var Board = require('./board');
 var HumanPlayer = require('./human');
 var ComputerPlayer = require('./computer');
-var rules = require('./rules');
 var output = require('./output');
-var input = require('./input');
+var rules = require('./rules');
 var winner = require('./checkForWinner');
 
 var board = new Board();
 
-var game = {
-    moveCount: 0
-};
+var game = {};
 
 game.setup = function(humanSymbol, newGame) {
     board.reset();

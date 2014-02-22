@@ -21,4 +21,10 @@ describe('rules', function() {
         expect(rules.getOtherSymbol('x')).toEqual('o');
     });
 
+    it('determines if a player wants to play again', function() {
+
+        expect(rules.newGamePrompt('Y')).toBeTruthy();
+        expect(rules.newGamePrompt('n')).toBeFalsy();
+    });
+
 });
