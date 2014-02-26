@@ -1,11 +1,11 @@
 var input = require('../src/input');
 
+var mockOutput = {
+    write: jasmine.createSpy('write')
+};
+
 describe('input', function() {
     it('displays the prompt', function() {
-        var mockOutput = {
-            write: jasmine.createSpy('write')
-        };
-
         input.prompt('My prompt text here:', function() {}, process.stdin, mockOutput);
 
         expect(mockOutput.write).toHaveBeenCalledWith('My prompt text here:');
@@ -18,7 +18,7 @@ describe('input', function() {
             done();
         };
 
-        input.prompt('My prompt text here:', callback, process.stdin, process.stdout);
+        input.prompt('My prompt text here:', callback, process.stdin, mockOutput);
 
         process.stdin.emit('data', line);
     });
@@ -30,7 +30,7 @@ describe('input', function() {
             done();
         };
 
-        input.promptForNumber('My prompt text here:', callback, process.stdin, process.stdout);
+        input.promptForNumber('My prompt text here:', callback, process.stdin, mockOutput);
 
         process.stdin.emit('data', line);
     });

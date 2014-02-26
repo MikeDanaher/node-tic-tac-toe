@@ -2,34 +2,28 @@ var winner = require('../src/checkForWinner');
 
 describe('winner', function() {
 
-    it('finds a winner with three o', function() {
+    it('finds a winner with the computerPlayer', function() {
+        var humanPlayer = 'j';
+        var computerPlayer = 'k';
         var possibleWins = [
-            ['o', 'o', 'o'],
-            [' ', 'o', 'x'],
-            ['x', ' ', 'x']
+            ['k', 'k', 'k'],
+            [' ', 'j', 'j'],
+            ['j', ' ', 'k']
         ];
 
-        expect(winner.check(possibleWins)).toBeTruthy();
-    });
-
-    it('finds a winner with three x', function() {
-        var possibleWins = [
-            ['x', 'o', 'o'],
-            ['o', 'o', 'x'],
-            ['x', 'x', 'x']
-        ];
-
-        expect(winner.check(possibleWins)).toBeTruthy();
+        expect(winner.who(possibleWins, humanPlayer, computerPlayer)).toEqual(computerPlayer);
     });
 
     it('does not find a winner', function() {
+        var humanPlayer = 'j';
+        var computerPlayer = 'k';
         var possibleWins = [
-            ['o', 'x', 'o'],
-            [' ', 'o', 'x'],
-            [' ', ' ', ' ']
+            ['j', 'j', 'k'],
+            [' ', 'k', 'j'],
+            [' ', 'k', ' ']
         ];
 
-        expect(winner.check(possibleWins)).toBeFalsy();
+        expect(winner.check(possibleWins, humanPlayer, computerPlayer)).toBeFalsy();
     });
 
 });

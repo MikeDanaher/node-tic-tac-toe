@@ -1,15 +1,15 @@
 var Winner = {};
 
-Winner.who = function(winsArray) {
+Winner.who = function(winsArray, currentPlayer, opponent) {
     var winningPlayer;
 
     for (var i = 0; i < winsArray.length; i++) {
         var row = winsArray[i];
-        if (row[0] === 'x' && row[1] === 'x' && row[2] === 'x') {
-            winningPlayer = 'x';
+        if (row[0] === currentPlayer && row[1] === currentPlayer && row[2] === currentPlayer) {
+            winningPlayer = currentPlayer;
             break;
-        } else if (row[0] === 'o' && row[1] === 'o' && row[2] === 'o') {
-            winningPlayer = 'o';
+        } else if (row[0] === opponent && row[1] === opponent && row[2] === opponent) {
+            winningPlayer = opponent;
             break;
         }
     }
@@ -18,8 +18,8 @@ Winner.who = function(winsArray) {
 
 };
 
-Winner.check = function(winsArray) {
-    var winningPlayer = Winner.who(winsArray);
+Winner.check = function(winsArray, currentPlayer, opponent) {
+    var winningPlayer = Winner.who(winsArray, currentPlayer, opponent);
 
     if (winningPlayer) {
         return true;

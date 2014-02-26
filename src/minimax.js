@@ -14,8 +14,8 @@ minimax.run = function(board, player, opponent) {
 };
 
 minimax.loop = function(board, depth, lowerBound, upperBound, player, opponent) {
-    if (winner.check(board.getPossibleWins()) || board.getOpenCells().length === 0) {
-        return minimax.score(board, depth, minimax.callingPlayer);
+    if (winner.check(board.getPossibleWins(), player, opponent) || board.getOpenCells().length === 0) {
+        return minimax.score(board, depth, minimax.callingPlayer, player, opponent);
     }
 
     var openCells = board.getOpenCells();
@@ -52,8 +52,8 @@ minimax.loop = function(board, depth, lowerBound, upperBound, player, opponent) 
 
 };
 
-minimax.score = function(board, depth, callingPlayer) {
-    var winningPlayer = winner.who(board.getPossibleWins());
+minimax.score = function(board, depth, callingPlayer, player, opponent) {
+    var winningPlayer = winner.who(board.getPossibleWins(), player, opponent);
 
     if (winningPlayer === callingPlayer) {
         return minimax.baseScore - depth;

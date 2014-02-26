@@ -4,6 +4,7 @@ rules.validMove = function(move, cells) {
     return cells.indexOf(move) !== -1;
 };
 
+//Used only if game requires x and o as symbols
 rules.validSymbol = function(symbol) {
     if (symbol === 'x' || symbol === 'o') {
         return true;
@@ -22,12 +23,6 @@ rules.getOtherSymbol = function(symbol) {
     }
 
     return oppositeSymbol;
-};
-
-rules.newGamePrompt = function(choice) {
-    var options = ['y', 'Y', 'Yes'];
-
-    return options.indexOf(choice) !== -1;
 };
 
 module.exports = rules;

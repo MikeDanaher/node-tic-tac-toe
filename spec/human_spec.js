@@ -1,4 +1,5 @@
 var HumanPlayer = require('../src/human');
+var input = require('../src/input');
 
 describe('human player', function() {
     it('creates a new human player and assignes their symbol', function() {
@@ -14,16 +15,18 @@ describe('human player', function() {
                 return [3, 5, 7];
             }
         };
-        var choice = '5\n';
 
         var expectation = function(move) {
             expect(mockBoard.getOpenCells()).toContain(move);
             done();
         };
 
+        spyOn(input, 'promptForNumber').andCallFake(function(message, callback) {
+            callback(5);
+        });
+
         player2.getMove(mockBoard, expectation);
 
-        process.stdin.emit('data', choice);
     });
 
 });

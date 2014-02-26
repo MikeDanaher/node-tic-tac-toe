@@ -1,5 +1,6 @@
 var Computer = require('../src/computer');
 var Board = require('../src/board');
+var Human = require('../src/human');
 
 describe('computer', function() {
 
@@ -11,6 +12,8 @@ describe('computer', function() {
 
     it('calls minimax on an empty board', function(done) {
         var board = new Board();
+        var opponent = new Human('n');
+
         board.reset();
 
         var expectation = function(bestMove) {
@@ -18,7 +21,7 @@ describe('computer', function() {
             done();
         };
 
-        computer.getMove(board, expectation);
+        computer.getMove(board, expectation, opponent);
     });
 
 });

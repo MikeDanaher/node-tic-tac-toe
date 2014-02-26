@@ -9,27 +9,15 @@ var board = new Board();
 
 var game = {};
 
-game.setup = function(humanSymbol, newGame) {
+game.setup = function(humanSymbol, computerSymbol, newGame) {
     board.reset();
     game.playAgain = newGame;
     game.moveCount = 0;
 
-    var currentPlayer,
-        opponent;
-
-    var opponentSymbol = rules.getOtherSymbol(humanSymbol);
     var humanPlayer = new HumanPlayer(humanSymbol);
-    var computerPlayer = new ComputerPlayer(opponentSymbol);
+    var computerPlayer = new ComputerPlayer(computerSymbol);
 
-    if (humanSymbol === 'x') {
-        currentPlayer = humanPlayer;
-        opponent = computerPlayer;
-    } else {
-        currentPlayer = computerPlayer;
-        opponent = humanPlayer;
-    }
-
-    game.playTurn(currentPlayer, opponent);
+    game.playTurn(humanPlayer, computerPlayer);
 };
 
 game.playTurn = function(currentPlayer, opponent) {
@@ -38,7 +26,7 @@ game.playTurn = function(currentPlayer, opponent) {
     var makeMove = function(move) {
         board.update(move, currentPlayer.symbol);
         game.moveCount++;
-        var isWinner = winner.check(board.getPossibleWins());
+        var isWinner = winner.check(board.getPossibleWins(), currentPlayer.symbol, opponent.symbol);
 
         if (isWinner) {
             game.finish(currentPlayer.symbol);
@@ -49,7 +37,7 @@ game.playTurn = function(currentPlayer, opponent) {
         }
     };
 
-    currentPlayer.getMove(board, makeMove);
+    currentPlayer.getMove(board, makeMove, opponent);
 };
 
 game.finish = function(player) {

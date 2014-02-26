@@ -3,6 +3,7 @@ function Board() {
     this.winOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 4, 7, 2, 5, 8, 3, 6, 9, 1, 5, 9, 3, 5, 7];
 }
 
+// Create an empty board using 1 - 9 for cell indexes and filling each cell with a space
 Board.prototype.reset = function() {
     for (var i = 1; i <= this.size; i++) {
         this[i] = ' ';
@@ -42,9 +43,9 @@ Board.prototype.getPossibleWins = function() {
 Board.prototype.getOpenCells = function() {
     var openCells = [];
 
-    for (var x = 1; x <= this.size; x++) {
-        if (this[x] !== 'x' && this[x] !== 'o') {
-            openCells.push(x);
+    for (var i = 1; i <= this.size; i++) {
+        if (this[i] === ' ') {
+            openCells.push(i);
         }
     }
 

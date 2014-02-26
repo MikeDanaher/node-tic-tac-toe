@@ -4,6 +4,7 @@ var gameBoard = require('../src/board');
 describe('minimax', function() {
 
     var callingPlayer = 'o',
+        player = 'o',
         opponent = 'x';
 
     it('determines the minimax score when o wins', function() {
@@ -19,7 +20,7 @@ describe('minimax', function() {
             }
         };
 
-        expect(minimax.score(mockBoard, depth, callingPlayer)).toEqual(2);
+        expect(minimax.score(mockBoard, depth, callingPlayer, player, opponent)).toEqual(2);
     });
 
     it('returns the best move when given a board where x could win next', function() {
@@ -54,14 +55,5 @@ describe('minimax', function() {
 
         expect(sides).toContain(minimax.run(Board4, callingPlayer, opponent));
     });
-
-    xit('should choose the first corner and then opposite corner when going first', function() {
-        var Board5 = new gameBoard();
-        Board5.setState(['o', ' ', ' ', ' ', 'x', ' ', ' ', ' ', ' ']);
-
-        expect(minimax.run(Board5, callingPlayer, opponent)).toEqual(9);
-    });
-
-
 
 });

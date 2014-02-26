@@ -8,12 +8,14 @@ describe('play game', function() {
 
     it('sets up a new game given the symbol entered by the human player', function() {
         spyOn(game, 'playTurn');
-        game.setup('x');
+        var newGame = function() {};
 
-        var currentPlayer = new HumanPlayer('x');
-        var opponent = new ComputerPlayer('o');
+        game.setup('x', 'o', newGame);
 
-        expect(game.playTurn).toHaveBeenCalledWith(currentPlayer, opponent);
+        var humanPlayer = new HumanPlayer('x');
+        var computerPlayer = new ComputerPlayer('o');
+
+        expect(game.playTurn).toHaveBeenCalledWith(humanPlayer, computerPlayer);
     });
 
     it('plays the game until x wins', function() {
@@ -31,6 +33,8 @@ describe('play game', function() {
         spyOn(mockPlayer2, 'getMove').andCallFake(function(openCells, moveCallback) {
             moveCallback(player2Moves.shift());
         });
+
+        spyOn(output, 'printBoard').andCallFake(function() {});
 
         spyOn(game, 'finish');
 
