@@ -1,5 +1,4 @@
-tdd-tic-tac-toe
-===============
+### node-tic-tac-toe
 
 A test driven, human vs. computer, tic-tac-toe game using node and jasmine-node. The computer player is implemented using minimax and thus should always win or tie the game.
 
@@ -13,7 +12,6 @@ The game is started by running 'node startGame.js.'. The human can choose any sy
 
 Currently, the human will always go first.
 
-tests
-===============
+## tests
 
 To run tests, type 'npm test' in the root directory. Tests can also be run using 'grunt' which also runs jshint and jsbeautifier to catch any syntax errors and ensure clean javascript. 
